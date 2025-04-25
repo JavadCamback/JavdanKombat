@@ -421,7 +421,7 @@
                 <div class="info-box">
                     <div class="info-item">
                         <i class="fas fa-info-circle"></i>
-                        <span>حداقل مبلغ واریزی 120 هزار تومان</span>
+                        <span>حداقل مبلغ واریزی 175 هزار تومان</span>
                     </div>
                     <div class="info-item">
                         <i class="fas fa-clock"></i>
@@ -537,7 +537,7 @@
             // Update withdraw amount
             document.getElementById('withdraw-amount').value = tomans >= 120000 ? 
                 tomans.toLocaleString('fa-IR') + " تومان" : 
-                "حداقل موجودی 120 هزار تومان";
+                "حداقل موجودی 175 هزار تومان";
         }
         
         // Save game state
@@ -732,7 +732,7 @@
             }
             
             if (tomans < 120000) {
-                showNotification('حداقل موجودی برای واریز 120 هزار تومان است!');
+                showNotification('حداقل موجودی برای واریز 175 هزار تومان است!');
                 return;
             }
             
