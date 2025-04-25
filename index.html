@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جاودان کمبت | کسب درآمد آنلاین</title>
+    <title>جاودان | کسب درآمد آنلاین</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -368,7 +368,7 @@
                 </div>
             </div>
             
-            <p class="text-sm text-gray-400 mb-4">هر 50 سکه = 1000 تومان</p>
+            <p class="text-sm text-gray-400 mb-4">هر 100 سکه = 1000 تومان</p>
             
             <button onclick="exchangeCoins()" class="w-full bg-green-600 hover:bg-green-700 py-3 rounded-lg font-bold transition-all">
                 تبدیل سکه‌ها
@@ -421,7 +421,7 @@
                 <div class="info-box">
                     <div class="info-item">
                         <i class="fas fa-info-circle"></i>
-                        <span>حداقل مبلغ واریزی 150 هزار تومان</span>
+                        <span>حداقل مبلغ واریزی 120 هزار تومان</span>
                     </div>
                     <div class="info-item">
                         <i class="fas fa-clock"></i>
@@ -528,16 +528,16 @@
             
             // Show/hide pulse effect on exchange button based on coins
             const exchangeButton = document.getElementById('exchange-button');
-            if (coins >= 50) {
+            if (coins >= 100) {
                 exchangeButton.classList.add('pulse');
             } else {
                 exchangeButton.classList.remove('pulse');
             }
             
             // Update withdraw amount
-            document.getElementById('withdraw-amount').value = tomans >= 150000 ? 
+            document.getElementById('withdraw-amount').value = tomans >= 120000 ? 
                 tomans.toLocaleString('fa-IR') + " تومان" : 
-                "حداقل موجودی 150 هزار تومان";
+                "حداقل موجودی 120 هزار تومان";
         }
         
         // Save game state
@@ -703,9 +703,9 @@
         
         // Exchange coins to tomans
         function exchangeCoins() {
-            if (coins >= 50) {
-                const exchangeAmount = Math.floor(coins / 50) * 50;
-                const tomanGain = (exchangeAmount / 50) * 1000; // 1000 tomans per 50 coins
+            if (coins >= 100) {
+                const exchangeAmount = Math.floor(coins / 100) * 100;
+                const tomanGain = (exchangeAmount / 100) * 1000; // 1000 tomans per 100 coins
                 
                 coins -= exchangeAmount;
                 tomans += tomanGain;
@@ -717,7 +717,7 @@
                 // Show success message
                 showNotification(`تبدیل موفق! ${(tomanGain/1000).toLocaleString('fa-IR')} هزار تومان دریافت کردید.`);
             } else {
-                showNotification('حداقل 50 سکه برای تبدیل نیاز دارید!');
+                showNotification('حداقل 100 سکه برای تبدیل نیاز دارید!');
             }
         }
         
@@ -731,8 +731,8 @@
                 return;
             }
             
-            if (tomans < 150000) {
-                showNotification('حداقل موجودی برای واریز 150 هزار تومان است!');
+            if (tomans < 120000) {
+                showNotification('حداقل موجودی برای واریز 120 هزار تومان است!');
                 return;
             }
             
