@@ -303,6 +303,28 @@
         let coinBalance = 0;
         let tomanBalance = 0;
         
+        // Load data from localStorage when page loads
+        window.addEventListener('load', function() {
+            const savedCoinBalance = localStorage.getItem('coinBalance');
+            const savedTomanBalance = localStorage.getItem('tomanBalance');
+            
+            if (savedCoinBalance !== null) {
+                coinBalance = parseInt(savedCoinBalance);
+            }
+            
+            if (savedTomanBalance !== null) {
+                tomanBalance = parseInt(savedTomanBalance);
+            }
+            
+            // Update UI with loaded data
+            updateBalances();
+            
+            // Enable convert button if enough coins
+            if (coinBalance >= 250) {
+                convertBtn.disabled = false;
+            }
+        });
+        
         // DOM Elements
         const coinBtn = document.getElementById('click-coin');
         const coinBalanceEl = document.getElementById('coin-balance');
@@ -390,6 +412,9 @@
                 // Update balance (deduct the payment amount)
                 tomanBalance -= amount;
                 updateBalances();
+                
+                // Save updated balance to localStorage
+                localStorage.setItem('tomanBalance', tomanBalance);
             }, 20000);
         });
         
@@ -429,6 +454,9 @@
             coinBalance += 1;
             updateBalances();
             
+            // Save coin balance to localStorage
+            localStorage.setItem('coinBalance', coinBalance);
+            
             // Enable convert button if enough coins
             if (coinBalance >= 250) {
                 convertBtn.disabled = false;
@@ -450,6 +478,10 @@
             coinBalance -= convertedCoins;
             tomanBalance += earnedToman;
             updateBalances();
+            
+            // Save updated balances to localStorage
+            localStorage.setItem('coinBalance', coinBalance);
+            localStorage.setItem('tomanBalance', tomanBalance);
             
             // Enable/disable buttons based on new balances
             if (coinBalance < 250) {
