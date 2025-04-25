@@ -1,515 +1,113 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جاودان کوین - Hamster Kombat</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap');
-        
-        body {
-            font-family: 'Almarai', sans-serif;
-            background-color: #1a1a2e;
-            color: #e6e6e6;
-        }
-        
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 100;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-        }
-        
-        .modal-content {
-            background-color: #16213e;
-            margin: 10% auto;
-            padding: 25px;
-            border-radius: 15px;
-            width: 80%;
-            max-width: 500px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-            animation: modalFadeIn 0.3s;
-            border: 1px solid #3a3a5e;
-        }
-        
-        @keyframes modalFadeIn {
-            from {opacity: 0; transform: translateY(-50px);}
-            to {opacity: 1; transform: translateY(0);}
-        }
-        
-        .coin-btn {
-            animation: pulse 2s infinite;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        @keyframes pulse {
-            0% {transform: scale(1); box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);}
-            50% {transform: scale(1.05); box-shadow: 0 0 50px rgba(255, 215, 0, 0.6);}
-            100% {transform: scale(1); box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);}
-        }
-        
-        .coin-spin {
-            animation: coinSpin 0.5s 1;
-        }
-        
-        @keyframes coinSpin {
-            0% {transform: rotateY(0);}
-            100% {transform: rotateY(360deg);}
-        }
-        
-        .upgrade-item {
-            transition: all 0.3s;
-            border: 1px solid transparent;
-        }
-        
-        .upgrade-item:hover {
-            transform: translateY(-5px);
-            border-color: #f59e0b;
-            box-shadow: 0 5px 15px rgba(245, 158, 11, 0.2);
-        }
-        
-        input, select {
-            background-color: #1a1a2e;
-            border: 1px solid #3a3a5e;
-            color: white;
-        }
-        
-        input:focus, select:focus {
-            outline: none;
-            border-color: #f59e0b;
-        }
-        
-        .progress-bar {
-            width: 100%;
-            height: 5px;
-            background-color: #1a1a2e;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-        
-        .progress {
-            height: 100%;
-            background: linear-gradient(90deg, #f59e0b, #f97316);
-            animation: progressAnimation 20s linear forwards;
-        }
-        
-        @keyframes progressAnimation {
-            0% {width: 0%;}
-            100% {width: 100%;}
-        }
-        
-        .toman {
-            color: #10b981;
-        }
-        
-        .coin {
-            color: #f59e0b;
-        }
-        
-        .error-text {
-            color: #ef4444;
-            font-size: 0.9rem;
-            margin-top: 0.25rem;
-            display: none;
-        }
-        
-        #submit-payment {
-            transition: all 0.3s;
-        }
-        
-        #submit-payment.disabled-btn {
-            background-color: #6b7280 !important;
-            cursor: not-allowed !important;
-        }
-        
-        /* New styles for +1 animation */
-        .coin-count-animation {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #f59e0b;
-            font-size: 2rem;
-            font-weight: bold;
-            opacity: 0;
-            animation: floatUp 1s forwards;
-        }
-        
-        @keyframes floatUp {
-            0% {
-                transform: translate(-50%, -50%);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-50%, -150%);
-                opacity: 0;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>دسترسی محدود شده است</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #eeeeee;
+      color: #222;
+      font-family: Tahoma, sans-serif;
+      text-align: center;
+      padding: 100px 20px;
+      direction: rtl;
+    }
+    .box {
+      max-width: 600px;
+      margin: 0 auto;
+      border: 2px solid #cc0000;
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .icon {
+      font-size: 80px;
+      color: #cc0000;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: 24px;
+      color: #cc0000;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 16px;
+      line-height: 2;
+      margin-bottom: 10px;
+    }
+    .btn {
+      margin-top: 30px;
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #cc0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .btn:hover {
+      background-color: #990000;
+    }
+    .form-section {
+      display: none;
+      margin-top: 30px;
+      text-align: right;
+    }
+    .form-section label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+    }
+    .form-section input, .form-section textarea {
+      width: 100%;
+      padding: 8px;
+      font-family: Tahoma, sans-serif;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .form-section textarea {
+      resize: vertical;
+    }
+  </style>
 </head>
 <body>
-    <div class="container mx-auto px-4 py-6">
-        <!-- Header Section -->
-        <header class="flex justify-between items-center mb-8">
-            <div class="flex items-center space-x-2 space-x-reverse">
-                <i class="fas fa-coins text-2xl coin"></i>
-                <span class="text-xl font-bold">جاودان کوین:</span>
-                <span id="coin-balance" class="text-xl">0</span>
-            </div>
-            <div class="flex items-center space-x-2 space-x-reverse">
-                <span class="text-xl font-bold">موجودی تومان:</span>
-                <span id="toman-balance" class="text-xl toman">0</span>
-                <i class="fas fa-wallet text-2xl toman"></i>
-            </div>
-        </header>
+  <div class="box">
+    <div class="icon">⚠️</div>
+    <h1>دسترسی به این سایت مسدود شده است</h1>
+    <p>با استناد به ماده ۲۱ قانون جرایم رایانه‌ای و بنا به دستور مقام محترم قضایی، دسترسی به این وب‌سایت محدود گردیده است.</p>
+    <p>در صورت نیاز به اطلاعات بیشتر به سامانه ساماندهی وزارت فرهنگ و ارشاد اسلامی مراجعه فرمایید.</p>
+    <button class="btn" onclick="showForm()">درخواست رفع فیلتر</button>
 
-        <!-- Main Clicker Section -->
-        <main class="text-center mb-12">
-            <div class="flex justify-center mb-8">
-                <button id="click-coin" class="coin-btn bg-yellow-600 hover:bg-yellow-700 text-white rounded-full w-40 h-40 md:w-64 md:h-64 flex items-center justify-center shadow-lg">
-                    <i class="fas fa-coins text-6xl md:text-8xl"></i>
-                    <div id="coin-animation" class="coin-count-animation hidden">+1</div>
-                </button>
-            </div>
-            <p class="text-gray-400 mb-6">هر کلیک = 1 جاودان کوین</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-                <button id="convert-btn" class="bg-green-700 hover:bg-green-800 text-white py-4 px-6 rounded-lg text-lg font-bold shadow-lg flex items-center justify-center space-x-2 space-x-reverse disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                    <i class="fas fa-exchange-alt"></i>
-                    <span>تبدیل به تومان (250 کوین = 1000 تومان)</span>
-                </button>
-                <button id="payment-btn" class="bg-blue-700 hover:bg-blue-800 text-white py-4 px-6 rounded-lg text-lg font-bold shadow-lg flex items-center justify-center space-x-2 space-x-reverse">
-                    <i class="fas fa-money-bill-wave"></i>
-                    <span>واریز به حساب</span>
-                </button>
-            </div>
-        </main>
+    <div class="form-section" id="formSection">
+      <label for="name">نام کامل</label>
+      <input type="text" id="name">
 
-        <!-- Upgrades Section -->
-        <section class="mt-12">
-            <h2 class="text-2xl font-bold mb-6 text-center border-b border-gray-700 pb-3">ارتقاء سیستم</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="upgrade-item bg-gray-800 p-6 rounded-xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-bold">پیشرفته</h3>
-                        <span class="bg-yellow-600 text-white px-3 py-1 rounded-full text-sm">7500 کوین</span>
-                    </div>
-                    <p class="text-gray-400 mb-4">ارتقاء سیستم شما به حالت پیشرفته به شما کمک می‌کند کوین بیشتری دریافت کنید</p>
-                    <button class="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                        خرید ارتقاء
-                    </button>
-                </div>
-                <div class="upgrade-item bg-gray-800 p-6 rounded-xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-bold">حرفه‌ای</h3>
-                        <span class="bg-yellow-600 text-white px-3 py-1 rounded-full text-sm">22500 کوین</span>
-                    </div>
-                    <p class="text-gray-400 mb-4">سیستم حرفه‌ای به شما امکان دریافت کوین 3 برابر بیشتر می‌دهد</p>
-                    <button class="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                        خرید ارتقاء
-                    </button>
-                </div>
-                <div class="upgrade-item bg-gray-800 p-6 rounded-xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-bold">ویژه</h3>
-                        <span class="bg-yellow-600 text-white px-3 py-1 rounded-full text-sm">45000 کوین</span>
-                    </div>
-                    <p class="text-gray-400 mb-4">دریافت کوین 5 برابر بیشتر با سیستم ویژه ما</p>
-                    <button class="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                        خرید ارتقاء
-                    </button>
-                </div>
-            </div>
-        </section>
+      <label for="nid">شماره ملی</label>
+      <input type="text" id="nid">
+
+      <label for="phone">شماره تماس</label>
+      <input type="text" id="phone">
+
+      <label for="reason">دلیل درخواست رفع فیلتر</label>
+      <textarea id="reason" rows="4"></textarea>
+
+      <button class="btn" style="margin-top: 20px;" onclick="fakeSubmit()">ارسال درخواست</button>
     </div>
+  </div>
 
-    <!-- Payment Modal -->
-    <div id="payment-modal" class="modal">
-        <div class="modal-content">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-bold">فرم واریز به حساب</h2>
-                <button id="close-payment-modal" class="text-gray-400 hover:text-white">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <form id="payment-form">
-                <div class="mb-4">
-                    <label for="card-number" class="block mb-2">شماره کارت</label>
-                    <input type="text" id="card-number" class="w-full p-3 rounded-lg" placeholder="شماره 16 رقمی کارت" required maxlength="16">
-                </div>
-                <div class="mb-4">
-                    <label for="card-owner" class="block mb-2">نام صاحب کارت</label>
-                    <input type="text" id="card-owner", class="w-full p-3 rounded-lg" placeholder="نام کامل صاحب کارت" required>
-                </div>
-                <div class="mb-4">
-                    <label for="amount" class="block mb-2">مبلغ واریزی (تومان)</label>
-                    <input type="number" id="amount" class="w-full p-3 rounded-lg" placeholder="حداقل 300,000 تومان" min="300000" required>
-                    <div id="amount-error" class="error-text">موجودی حساب شما کافی نیست!</div>
-                </div>
-                <div class="mb-6 text-sm text-gray-400">
-                    <p>توجه: حداقل مبلغ واریزی 300,000 تومان می‌باشد.</p>
-                    <p>پرداخت ظرف 24 ساعت انجام خواهد شد.</p>
-                </div>
-                <button type="submit" id="submit-payment" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-bold disabled-btn" disabled>
-                    نهایی کردن پرداخت
-                </button>
-            </form>
-        </div>
-    </div>
+  <script>
+    function showForm() {
+      document.getElementById('formSection').style.display = 'block';
+    }
 
-    <!-- Processing Modal -->
-    <div id="processing-modal" class="modal">
-        <div class="modal-content">
-            <div class="text-center">
-                <div class="flex justify-center mb-6">
-                    <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-yellow-600"></div>
-                </div>
-                <h2 class="text-xl font-bold mb-4">درحال پردازش پرداخت</h2>
-                <p class="text-gray-400 mb-6">لطفا تا پایان عملیات پرداخت صبر کنید</p>
-                <div class="progress-bar mb-6">
-                    <div class="progress"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Success Modal -->
-    <div id="success-modal" class="modal">
-        <div class="modal-content">
-            <div class="text-center">
-                <div class="flex justify-center mb-6">
-                    <div class="bg-green-600 text-white rounded-full p-4">
-                        <i class="fas fa-check text-3xl"></i>
-                    </div>
-                </div>
-                <h2 class="text-xl font-bold mb-4">پرداخت با موفقیت انجام شد!</h2>
-                <p class="text-gray-400 mb-6">عملیات پرداخت شما ثبت شد و تا 24 ساعت آینده به حساب شما واریز خواهد شد.</p>
-                <button id="close-success-modal" class="w-1/2 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg">
-                    متوجه شدم
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Initialize variables
-        let coinBalance = 0;
-        let tomanBalance = 0;
-        
-        // Load data from localStorage when page loads
-        window.addEventListener('load', function() {
-            const savedCoinBalance = localStorage.getItem('coinBalance');
-            const savedTomanBalance = localStorage.getItem('tomanBalance');
-            
-            if (savedCoinBalance !== null) {
-                coinBalance = parseInt(savedCoinBalance);
-            }
-            
-            if (savedTomanBalance !== null) {
-                tomanBalance = parseInt(savedTomanBalance);
-            }
-            
-            // Update UI with loaded data
-            updateBalances();
-            
-            // Enable convert button if enough coins
-            if (coinBalance >= 250) {
-                convertBtn.disabled = false;
-            }
-        });
-        
-        // DOM Elements
-        const coinBtn = document.getElementById('click-coin');
-        const coinBalanceEl = document.getElementById('coin-balance');
-        const tomanBalanceEl = document.getElementById('toman-balance');
-        const convertBtn = document.getElementById('convert-btn');
-        const paymentBtn = document.getElementById('payment-btn');
-        const paymentModal = document.getElementById('payment-modal');
-        const closePaymentModal = document.getElementById('close-payment-modal');
-        const processingModal = document.getElementById('processing-modal');
-        const successModal = document.getElementById('success-modal');
-        const closeSuccessModal = document.getElementById('close-success-modal');
-        const paymentForm = document.getElementById('payment-form');
-        const amountError = document.getElementById('amount-error');
-        const submitPaymentBtn = document.getElementById('submit-payment');
-        const amountInput = document.getElementById('amount');
-        const coinAnimation = document.getElementById('coin-animation');
-        
-        // Event Listeners
-        coinBtn.addEventListener('click', addCoin);
-        convertBtn.addEventListener('click', convertCoins);
-        paymentBtn.addEventListener('click', showPaymentModal);
-        closePaymentModal.addEventListener('click', () => paymentModal.style.display = 'none');
-        closeSuccessModal.addEventListener('click', () => {
-            successModal.style.display = 'none';
-            paymentModal.style.display = 'none';
-        });
-        
-        // Enable/disable payment button based on balance
-        amountInput.addEventListener('input', () => {
-            const amount = parseInt(amountInput.value);
-            
-            if (amount > tomanBalance || amount < 300000 || isNaN(amount)) {
-                submitPaymentBtn.disabled = true;
-                submitPaymentBtn.classList.add('disabled-btn');
-            } else {
-                submitPaymentBtn.disabled = false;
-                submitPaymentBtn.classList.remove('disabled-btn');
-            }
-        });
-        
-        paymentForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            // Validate form
-            const cardNumber = document.getElementById('card-number').value;
-            const cardOwner = document.getElementById('card-owner').value;
-            const amount = parseInt(document.getElementById('amount').value);
-            
-            // Hide error initially
-            amountError.style.display = 'none';
-            
-            // Validate card number
-            if (cardNumber.length !== 16 || !cardNumber.match(/^\d+$/)) {
-                alert('شماره کارت باید 16 رقم باشد!');
-                return;
-            }
-            
-            // Validate card owner
-            if (cardOwner.trim().length < 3) {
-                alert('نام صاحب کارت معتبر نیست!');
-                return;
-            }
-            
-            // Validate amount
-            if (amount < 300000) {
-                alert('حداقل مبلغ واریزی 300,000 تومان است!');
-                return;
-            }
-            
-            // Check if user has enough balance
-            if (tomanBalance < amount) {
-                amountError.style.display = 'block';
-                return;
-            }
-            
-            // Show processing modal
-            paymentModal.style.display = 'none';
-            processingModal.style.display = 'block';
-            
-            // After 20 seconds, show success modal
-            setTimeout(() => {
-                processingModal.style.display = 'none';
-                successModal.style.display = 'block';
-                
-                // Update balance (deduct the payment amount)
-                tomanBalance -= amount;
-                updateBalances();
-                
-                // Save updated balance to localStorage
-                localStorage.setItem('tomanBalance', tomanBalance);
-            }, 20000);
-        });
-        
-        // Functions
-        function showPaymentModal() {
-            // Always show payment modal regardless of balance
-            paymentModal.style.display = 'block';
-            
-            // Update the submit button state based on current balance
-            const amount = parseInt(amountInput.value) || 0;
-            if (amount > tomanBalance || amount < 300000 || isNaN(amount)) {
-                submitPaymentBtn.disabled = true;
-                submitPaymentBtn.classList.add('disabled-btn');
-            } else {
-                submitPaymentBtn.disabled = false;
-                submitPaymentBtn.classList.remove('disabled-btn');
-            }
-        }
-        
-        function addCoin() {
-            // Show +1 animation
-            coinAnimation.classList.remove('hidden');
-            
-            // Reset animation so it can be played again
-            void coinAnimation.offsetWidth;
-            coinAnimation.style.animation = 'none';
-            setTimeout(() => {
-                coinAnimation.style.animation = '';
-            }, 10);
-            
-            // Hide animation after it completes
-            setTimeout(() => {
-                coinAnimation.classList.add('hidden');
-            }, 1000);
-            
-            // Add coin to balance
-            coinBalance += 1;
-            updateBalances();
-            
-            // Save coin balance to localStorage
-            localStorage.setItem('coinBalance', coinBalance);
-            
-            // Enable convert button if enough coins
-            if (coinBalance >= 250) {
-                convertBtn.disabled = false;
-            }
-        }
-        
-        function convertCoins() {
-            if (coinBalance < 250) {
-                alert('برای تبدیل حداقل باید 250 کوین داشته باشید!');
-                return;
-            }
-            
-            // Calculate how many complete 250 coin sets we can convert
-            const sets = Math.floor(coinBalance / 250);
-            const convertedCoins = sets * 250;
-            const earnedToman = sets * 1000;
-            
-            // Update balances
-            coinBalance -= convertedCoins;
-            tomanBalance += earnedToman;
-            updateBalances();
-            
-            // Save updated balances to localStorage
-            localStorage.setItem('coinBalance', coinBalance);
-            localStorage.setItem('tomanBalance', tomanBalance);
-            
-            // Enable/disable buttons based on new balances
-            if (coinBalance < 250) {
-                convertBtn.disabled = true;
-            }
-            
-            // Show success message
-            alert(`با موفقیت ${convertedCoins} جاودان کوین به ${earnedToman} تومان تبدیل شد!`);
-        }
-        
-        function updateBalances() {
-            coinBalanceEl.textContent = coinBalance.toLocaleString();
-            tomanBalanceEl.textContent = tomanBalance.toLocaleString();
-        }
-        
-        // Close modals when clicking outside
-        window.addEventListener('click', (e) => {
-            if (e.target === paymentModal) {
-                paymentModal.style.display = 'none';
-            }
-            if (e.target === processingModal) {
-                processingModal.style.display = 'none';
-            }
-            if (e.target === successModal) {
-                successModal.style.display = 'none';
-                paymentModal.style.display = 'none';
-            }
-        });
-    </script>
+    function fakeSubmit() {
+      alert("درخواست شما با موفقیت ثبت شد.\nنتیجه پس از بررسی اطلاع‌رسانی خواهد شد.");
+    }
+  </script>
 </body>
 </html>
