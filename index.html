@@ -3,7 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جاودان کمبت | Javdan Kombat</title>
+    <title>جاودان کوین | Hamster Kombat</title>
+    <script type="text/javascript">
+      (function (){
+        const head = document.getElementsByTagName("head")[0];
+        const script = document.createElement("script");
+        script.type = "text/javascript";
+        script.async = true;
+        script.src = "https://s1.mediaad.org/serve/serverqp.github.io/loader.js";
+        head.appendChild(script);
+      })();
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
@@ -105,6 +115,7 @@
 </head>
 <body class="bg-dark text-white min-h-screen flex flex-col font-sans">
     <!-- Header -->
+     <div id="mediaad-45B8j"></div>
     <header class="bg-slate-900/50 p-4 flex justify-between items-center border-b border-slate-800 backdrop-blur-sm">
         <div>
             <button id="withdrawBtn" class="bg-gradient-to-r from-primary to-secondary hover:from-indigo-700 hover:to-purple-700 px-4 py-2 rounded-lg flex items-center shadow-lg">
@@ -129,7 +140,7 @@
             <div class="bg-slate-800/50 rounded-lg px-4 py-2 flex items-center justify-between border border-slate-700 backdrop-blur-sm min-w-44">
                 <div class="flex items-center">
                     <i class="fab fa-ethereum text-purple-400 mr-2"></i>
-                    <div class="text-sm text-slate-300">ارز دیجیتال جاودان</div>
+                    <div class="text-sm text-slate-300">       ارز دیجیتال جاودان</div>
                 </div>
                 <div id="tokenBalance" class="font-bold text-purple-400" dir="ltr">0</div>
             </div>
@@ -173,7 +184,7 @@
             
             <div class="relative">
                 <div class="absolute inset-0 rounded-full bg-amber-500 blur-lg opacity-30 scale-90"></div>
-                <button id="clickButton" class="relative bg-gradient-to-br from-amber-400 to-amber-600 hover:from-amber-500 hover:to-amber-700 text-gray-900 font-bold rounded-full w-72 h-72 flex items-center justify-center shadow-2xl pulse-animation text-4xl glow-animation transition-all transform hover:scale-105 active:scale-95">
+                <button id="clickButton" onclick="antiAutoClicker(); myMainFunction();" class="relative bg-gradient-to-br from-amber-400 to-amber-600 hover:from-amber-500 hover:to-amber-700 text-gray-900 font-bold rounded-full w-72 h-72 flex items-center justify-center shadow-2xl pulse-animation text-4xl glow-animation transition-all transform hover:scale-105 active:scale-95">
                     <div class="absolute inset-0 flex items-center justify-center text-amber-200/10">
                         <i class="fas fa-coins text-8xl"></i>
                     </div>
@@ -353,7 +364,7 @@
                         </span>
                         <span class="bg-slate-800 px-3 py-1 rounded-lg border border-amber-500/30 flex items-center">
                             <i class="fab fa-ethereum text-xs mr-1"></i>
-                            <span>325 ارز دیجیتال جاودان</span>
+                            <span>325 توکن جاودان</span>
                         </span>
                     </div>
                 </div>
@@ -367,7 +378,7 @@
                         <div class="relative">
                             <select id="paymentType" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 pl-4 pr-10 focus:ring-2 focus:ring-amber-400 appearance-none transition-all focus:border-amber-400 text-white">
                                 <option value="toman">تومان</option>
-                                <option value="token">ارز دیجیتال جاودان</option>
+                                <option value="token">توکن جاودان</option>
                             </select>
                             <div class="absolute left-3 top-3 text-slate-400">
                                 <i class="fas fa-chevron-down"></i>
@@ -560,6 +571,44 @@
     </div>
 
     <script>
+
+
+
+
+
+
+
+
+
+
+let lastClickTime = 0;
+
+function antiAutoClicker() {
+    let now = Date.now();
+    let diff = now - lastClickTime;
+
+    if (diff < 175) { // اگر فاصله بین کلیک‌ها کمتر از 300 میلی‌ثانیه بود
+        alert("⛔️ شناسایی شد: لطفاً از اتوکلیکر استفاده نکنید!");
+        location.reload(); // صفحه رو ریفرش میکنه یا میتونی بنشون کنی
+        return;
+    }
+
+    lastClickTime = now;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // Game State (loaded from localStorage if available)
         const state = JSON.parse(localStorage.getItem('hamsterKombatState')) || {
             javanCoin: 0,
@@ -766,7 +815,7 @@
             if (state.javanCoin >= 1250) {
                 const coinsToConvert = Math.floor(state.javanCoin / 2250) * 2250;
                 const exchangeRate = state.upgrades.conversionRate ? 1200 : 1000; // 20% bonus if upgraded
-                const tomanGained = (coinsToConvert / 1500) * exchangeRate;
+                const tomanGained = (coinsToConvert / 2000) * exchangeRate;
                 
                 state.javanCoin -= coinsToConvert;
                 state.toman += tomanGained;
@@ -1030,5 +1079,6 @@
             }
         }, 1000);
     </script>
+
 </body>
 </html>
