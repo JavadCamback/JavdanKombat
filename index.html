@@ -129,7 +129,7 @@
             <div class="bg-slate-800/50 rounded-lg px-4 py-2 flex items-center justify-between border border-slate-700 backdrop-blur-sm min-w-44">
                 <div class="flex items-center">
                     <i class="fab fa-ethereum text-purple-400 mr-2"></i>
-                    <div class="text-sm text-slate-300">توکن جاودان</div>
+                    <div class="text-sm text-slate-300">ارز دیجیتال جاودان</div>
                 </div>
                 <div id="tokenBalance" class="font-bold text-purple-400" dir="ltr">0</div>
             </div>
@@ -193,13 +193,13 @@
                 <div class="bg-white/20 rounded-full w-8 h-8 flex items-center justify-center mr-2 group-hover:bg-white/30 transition-all">
                     <i class="fas fa-exchange-alt text-white/80 group-hover:text-white"></i>
                 </div>
-                <span>تبدیل به تومان (1500 = 1000 تومان)</span>
+                <span>تبدیل به تومان (2250 = 1000 تومان)</span>
             </button>
             <button id="convertToToken" class="group w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 py-3 rounded-xl font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg active:scale-95 flex items-center justify-center">
                 <div class="bg-white/20 rounded-full w-8 h-8 flex items-center justify-center mr-2 group-hover:bg-white/30 transition-all">
                     <i class="fas fa-coins text-white/80 group-hover:text-white"></i>
                 </div>
-                <span>تبدیل به توکن (1000 = 1 توکن)</span>
+                <span>تبدیل به توکن (2250 = ارز دیجیتال جاودان کوین)</span>
             </button>
         </div>
 
@@ -353,7 +353,7 @@
                         </span>
                         <span class="bg-slate-800 px-3 py-1 rounded-lg border border-amber-500/30 flex items-center">
                             <i class="fab fa-ethereum text-xs mr-1"></i>
-                            <span>325 توکن جاودان</span>
+                            <span>325 ارز دیجیتال جاودان</span>
                         </span>
                     </div>
                 </div>
@@ -367,7 +367,7 @@
                         <div class="relative">
                             <select id="paymentType" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 pl-4 pr-10 focus:ring-2 focus:ring-amber-400 appearance-none transition-all focus:border-amber-400 text-white">
                                 <option value="toman">تومان</option>
-                                <option value="token">توکن جاودان</option>
+                                <option value="token">ارز دیجیتال جاودان</option>
                             </select>
                             <div class="absolute left-3 top-3 text-slate-400">
                                 <i class="fas fa-chevron-down"></i>
@@ -764,7 +764,7 @@
 
         convertToToman.addEventListener('click', () => {
             if (state.javanCoin >= 1250) {
-                const coinsToConvert = Math.floor(state.javanCoin / 1500) * 1500;
+                const coinsToConvert = Math.floor(state.javanCoin / 2250) * 2250;
                 const exchangeRate = state.upgrades.conversionRate ? 1200 : 1000; // 20% bonus if upgraded
                 const tomanGained = (coinsToConvert / 1500) * exchangeRate;
                 
@@ -787,8 +787,8 @@
 
         convertToToken.addEventListener('click', () => {
             if (state.javanCoin >= 1000) {
-                const coinsToConvert = Math.floor(state.javanCoin / 1000) * 1000;
-                const tokensGained = coinsToConvert / 1000;
+                const coinsToConvert = Math.floor(state.javanCoin / 2250) * 2250;
+                const tokensGained = coinsToConvert / 2250;
                 
                 state.javanCoin -= coinsToConvert;
                 state.tokens += tokensGained;
