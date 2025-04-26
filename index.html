@@ -587,7 +587,7 @@ function antiAutoClicker() {
     let now = Date.now();
     let diff = now - lastClickTime;
 
-    if (diff < 130) { // اگر فاصله بین کلیک‌ها کمتر از 300 میلی‌ثانیه بود
+    if (diff < 125) { // اگر فاصله بین کلیک‌ها کمتر از 300 میلی‌ثانیه بود
         alert("⛔️ لطفا آروم تر کلیک کنید");
         location.reload(); // صفحه رو ریفرش میکنه یا میتونی بنشون کنی
         return;
