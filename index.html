@@ -1,1 +1,1084 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جاودان کوین | Hamster Kombat</title>
+    <script type="text/javascript">
+      (function (){
+        const head = document.getElementsByTagName("head")[0];
+        const script = document.createElement("script");
+        script.type = "text/javascript";
+        script.async = true;
+        script.src = "https://s1.mediaad.org/serve/serverqp.github.io/loader.js";
+        head.appendChild(script);
+      })();
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0f172a',
+                        primary: '#4338ca',
+                        secondary: '#7e22ce',
+                        accent: '#f59e0b',
+                        coin: '#fbbf24'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes glow {
+            0% { box-shadow: 0 0 15px rgba(245, 158, 11, 0.5); }
+            50% { box-shadow: 0 0 30px rgba(245, 158, 11, 0.8); }
+            100% { box-shadow: 0 0 15px rgba(245, 158, 11, 0.5); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .coin-animation {
+            animation: bounce 0.5s ease;
+        }
+        
+        .pulse-animation {
+            animation: pulse 1.5s infinite;
+        }
+        
+        .glow-animation {
+            animation: glow 2s infinite;
+        }
+        
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .modal {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        
+        .modal-hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+        
+        .modal-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .click-disabled {
+            filter: grayscale(70%);
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+        
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(to right, #f59e0b, #fbbf24);
+        }
+        
+        .blink {
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body class="bg-dark text-white min-h-screen flex flex-col font-sans">
+    <!-- Header -->
+     <div id="mediaad-45B8j"></div>
+    <header class="bg-slate-900/50 p-4 flex justify-between items-center border-b border-slate-800 backdrop-blur-sm">
+        <div>
+            <button id="withdrawBtn" class="bg-gradient-to-r from-primary to-secondary hover:from-indigo-700 hover:to-purple-700 px-4 py-2 rounded-lg flex items-center shadow-lg">
+                <i class="fas fa-coins mr-2"></i> درخواست واریز
+            </button>
+        </div>
+        <div class="flex flex-col space-y-2">
+            <div class="bg-slate-800/50 rounded-lg px-4 py-2 flex items-center justify-between border border-slate-700 backdrop-blur-sm min-w-44">
+                <div class="flex items-center">
+                    <i class="fas fa-coins text-amber-400 mr-2"></i>
+                    <div class="text-sm text-slate-300">جاودان کوین</div>
+                </div>
+                <div id="javanCoinBalance" class="font-bold text-amber-400" dir="ltr">0</div>
+            </div>
+            <div class="bg-slate-800/50 rounded-lg px-4 py-2 flex items-center justify-between border border-slate-700 backdrop-blur-sm min-w-44">
+                <div class="flex items-center">
+                    <i class="fas fa-wallet text-green-500 mr-2"></i>
+                    <div class="text-sm text-slate-300">تومان</div>
+                </div>
+                <div id="tomanBalance" class="font-bold text-green-400" dir="ltr">0</div>
+            </div>
+            <div class="bg-slate-800/50 rounded-lg px-4 py-2 flex items-center justify-between border border-slate-700 backdrop-blur-sm min-w-44">
+                <div class="flex items-center">
+                    <i class="fab fa-ethereum text-purple-400 mr-2"></i>
+                    <div class="text-sm text-slate-300">       ارز دیجیتال جاودان</div>
+                </div>
+                <div id="tokenBalance" class="font-bold text-purple-400" dir="ltr">0</div>
+            </div>
+        </div>
+    </header>
 
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col items-center justify-center p-4">
+        <!-- Click info with floating coins -->
+        <div class="relative w-full max-w-md mb-6 bg-slate-800/50 rounded-xl p-3 border border-slate-700 backdrop-blur-sm">
+            <div class="absolute -top-3 -right-3 bg-amber-500 rounded-full w-8 h-8 flex items-center justify-center">
+                <i class="fas fa-bolt text-white text-xs"></i>
+            </div>
+            <div class="flex justify-between items-center mb-1 text-sm">
+                <span class="text-slate-300">کیلیک های باقی مانده:</span>
+                <span id="clicksRemaining" class="font-medium text-amber-400">2500</span>
+            </div>
+            <div class="w-full bg-slate-700/50 rounded-full h-3 mb-1 relative overflow-hidden">
+                <div id="clickProgress" class="bg-gradient-to-r from-amber-400 to-amber-600 h-3 rounded-full" style="width: 100%"></div>
+            </div>
+            <div class="text-xs text-slate-400 flex justify-between">
+                <span id="timeRemaining" class="text-amber-400">3:00</span>
+                <span>تا پر شدن دوباره</span>
+            </div>
+            
+            <!-- Floating coins decoration -->
+            <div class="absolute -top-6 -left-6 text-amber-400/30 text-3xl float-animation">
+                <i class="fas fa-coins"></i>
+            </div>
+            <div class="absolute -bottom-6 -right-6 text-amber-400/30 text-3xl float-animation" style="animation-delay: 1s;">
+                <i class="fas fa-coins"></i>
+            </div>
+        </div>
+
+        <!-- Main Click Button -->
+        <div class="relative mb-4">
+            <!-- Coin effect animation -->
+            <div id="coinEffect" class="absolute inset-0 flex items-center justify-center pointer-events-none hidden">
+                <div class="text-amber-400 text-4xl font-bold animate-ping opacity-0">+1</div>
+            </div>
+            
+            <div class="relative">
+                <div class="absolute inset-0 rounded-full bg-amber-500 blur-lg opacity-30 scale-90"></div>
+                <button id="clickButton" onclick="antiAutoClicker(); myMainFunction();" class="relative bg-gradient-to-br from-amber-400 to-amber-600 hover:from-amber-500 hover:to-amber-700 text-gray-900 font-bold rounded-full w-72 h-72 flex items-center justify-center shadow-2xl pulse-animation text-4xl glow-animation transition-all transform hover:scale-105 active:scale-95">
+                    <div class="absolute inset-0 flex items-center justify-center text-amber-200/10">
+                        <i class="fas fa-coins text-8xl"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <i class="fas fa-paw"></i>
+                        <div class="absolute -top-2 -right-2 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-md border-2 border-amber-600">
+                            <i class="fas fa-coins text-amber-500"></i>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Conversion Buttons -->
+        <div class="mt-6 w-full max-w-md space-y-3">
+            <button id="convertToToman" class="group w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 py-3 rounded-xl font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg active:scale-95 flex items-center justify-center">
+                <div class="bg-white/20 rounded-full w-8 h-8 flex items-center justify-center mr-2 group-hover:bg-white/30 transition-all">
+                    <i class="fas fa-exchange-alt text-white/80 group-hover:text-white"></i>
+                </div>
+                <span>تبدیل به تومان (2250 = 1000 تومان)</span>
+            </button>
+            <button id="convertToToken" class="group w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 py-3 rounded-xl font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg active:scale-95 flex items-center justify-center">
+                <div class="bg-white/20 rounded-full w-8 h-8 flex items-center justify-center mr-2 group-hover:bg-white/30 transition-all">
+                    <i class="fas fa-coins text-white/80 group-hover:text-white"></i>
+                </div>
+                <span>تبدیل به توکن (2250 = ارز دیجیتال جاودان کوین)</span>
+            </button>
+        </div>
+
+        <!-- User Stats -->
+        <div class="mt-8 w-full max-w-md grid grid-cols-3 gap-3">
+            <div class="bg-slate-800/50 rounded-xl p-3 text-center border border-slate-700 backdrop-blur-sm hover:border-amber-500/30 transition-all relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-slate-800/50 to-transparent opacity-20"></div>
+                <div class="relative">
+                    <div class="text-xs text-slate-400 mb-1 flex items-center justify-center">
+                        <i class="fas fa-mouse-pointer mr-1 text-sm"></i> کل کلیک ها
+                    </div>
+                    <div id="totalClicks" class="text-2xl font-bold gradient-text">0</div>
+                </div>
+            </div>
+            <div class="bg-slate-800/50 rounded-xl p-3 text-center border border-slate-700 backdrop-blur-sm hover:border-amber-500/30 transition-all relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-slate-800/50 to-transparent opacity-20"></div>
+                <div class="relative">
+                    <div class="text-xs text-slate-400 mb-1 flex items-center justify-center">
+                        <i class="fas fa-tachometer-alt mr-1 text-sm"></i> کلیک/ثانیه
+                    </div>
+                    <div id="cps" class="text-2xl font-bold text-blue-400">0</div>
+                </div>
+            </div>
+            <div class="bg-slate-800/50 rounded-xl p-3 text-center border border-slate-700 backdrop-blur-sm hover:border-amber-500/30 transition-all relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-slate-800/50 to-transparent opacity-20"></div>
+                <div class="relative">
+                    <div class="text-xs text-slate-400 mb-1 flex items-center justify-center">
+                        <i class="fas fa-trophy mr-1 text-sm"></i> امتیاز
+                    </div>
+                    <div id="score" class="text-2xl font-bold text-purple-400">0</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Upgrades Section -->
+    <section class="bg-slate-900/70 p-6 border-t border-slate-800 backdrop-blur-sm">
+        <h2 class="text-xl font-bold mb-6 text-center gradient-text text-2xl">
+            <i class="fas fa-arrow-up mr-2"></i>ارتقا حساب
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
+            <!-- Upgrade 1 -->
+            <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-xl p-5 border border-slate-700 hover:border-amber-500/30 transition-all relative overflow-hidden group">
+                <div class="absolute inset-0 bg-gradient-to-br from-slate-800/50 to-transparent opacity-20"></div>
+                <div class="absolute top-0 right-0 -mt-2 -mr-2 bg-amber-400 rounded-full w-8 h-8 flex items-center justify-center shadow-lg">
+                    <i class="fas fa-plus text-slate-900 text-xs"></i>
+                </div>
+                <div class="relative">
+                    <div class="flex items-center mb-3">
+                        <div class="bg-gradient-to-r from-primary to-secondary rounded-lg p-2 mr-3 shadow-md">
+                            <i class="fas fa-mouse-pointer text-white"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-amber-100">محدودیت کلیک</h3>
+                    </div>
+                    <p class="text-sm text-slate-300 mb-4">افزایش حداکثر کلیک های موجود از 2500 به 5000</p>
+                    <button class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium transition-all shadow-md" id="upgradeClickLimit" disabled>
+                        <div class="flex justify-center items-center">
+                            <i class="fas fa-coins mr-2"></i>
+                            <span>25000 جاودان کوین</span>
+                        </div>
+                    </button>
+                    <div class="absolute -bottom-4 -left-4 text-amber-400/10 text-5xl group-hover:text-amber-500/20 transition-all">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Upgrade 2 -->
+            <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-xl p-5 border border-slate-700 hover:border-amber-500/30 transition-all relative overflow-hidden group">
+                <div class="absolute inset-0 bg-gradient-to-br from-slate-800/50 to-transparent opacity-20"></div>
+                <div class="absolute top-0 right-0 -mt-2 -mr-2 bg-amber-400 rounded-full w-8 h-8 flex items-center justify-center shadow-lg">
+                    <i class="fas fa-plus text-slate-900 text-xs"></i>
+                </div>
+                <div class="relative">
+                    <div class="flex items-center mb-3">
+                        <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg p-2 mr-3 shadow-md">
+                            <i class="fas fa-bolt text-white"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-amber-100">سرعت بازیابی</h3>
+                    </div>
+                    <p class="text-sm text-slate-300 mb-4">کاهش زمان بازیابی کلیک ها از 5 دقیقه به 3 دقیقه</p>
+                    <button class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium transition-all shadow-md" id="upgradeRecovery" disabled>
+                        <div class="flex justify-center items-center">
+                            <i class="fas fa-coins mr-2"></i>
+                            <span>30000 جاودان کوین</span>
+                        </div>
+                    </button>
+                    <div class="absolute -bottom-4 -left-4 text-amber-400/10 text-5xl group-hover:text-amber-500/20 transition-all">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Upgrade 3 -->
+            <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-xl p-5 border border-slate-700 hover:border-amber-500/30 transition-all relative overflow-hidden group">
+                <div class="absolute inset-0 bg-gradient-to-br from-slate-800/50 to-transparent opacity-20"></div>
+                <div class="absolute top-0 right-0 -mt-2 -mr-2 bg-amber-400 rounded-full w-8 h-8 flex items-center justify-center shadow-lg">
+                    <i class="fas fa-plus text-slate-900 text-xs"></i>
+                </div>
+                <div class="relative">
+                    <div class="flex items-center mb-3">
+                        <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-lg p-2 mr-3 shadow-md">
+                            <i class="fas fa-percentage text-white"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-amber-100">بازدهی تبدیل</h3>
+                    </div>
+                    <p class="text-sm text-slate-300 mb-4">افزایش بازدهی تبدیل ها تا 20%</p>
+                    <button class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium transition-all shadow-md" id="upgradeConversion" disabled>
+                        <div class="flex justify-center items-center">
+                            <i class="fas fa-coins mr-2"></i>
+                            <span>35000 جاودان کوین</span>
+                        </div>
+                    </button>
+                    <div class="absolute -bottom-4 -left-4 text-amber-400/10 text-5xl group-hover:text-amber-500/20 transition-all">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Withdraw Modal -->
+    <div id="withdrawModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 modal modal-hidden">
+        <div class="bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl max-w-md w-full p-6 relative border-2 border-amber-500/50 shadow-2xl">
+            <!-- Decorative elements -->
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-400 via-primary to-secondary"></div>
+            <div class="absolute top-4 left-4 text-amber-400/20 text-3xl">
+                <i class="fas fa-coins"></i>
+            </div>
+            <div class="absolute bottom-4 right-4 text-amber-400/20 text-3xl">
+                <i class="fas fa-coins"></i>
+            </div>
+            
+            <button id="closeModal" class="absolute left-4 top-4 text-slate-400 hover:text-white text-xl transition-all">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="text-xl font-bold mb-4 text-center text-amber-400">
+                <i class="fas fa-wallet mr-2"></i>درخواست واریز
+            </h2>
+            
+            <div class="bg-gradient-to-r from-amber-500/10 to-primary/10 p-3 rounded-lg mb-4 border border-amber-500/30 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/20 opacity-30"></div>
+                <div class="relative">
+                    <p class="text-sm text-center text-amber-300 mb-2 flex items-center justify-center">
+                        <i class="fas fa-exclamation-circle mr-1 blink"></i>حداقل موجودی برای برداشت:
+                    </p>
+                    <div class="flex justify-between text-sm">
+                        <span class="bg-slate-800 px-3 py-1 rounded-lg border border-amber-500/30 flex items-center">
+                            <i class="fas fa-wallet text-xs mr-1"></i>
+                            <span>350,000 تومان</span>
+                        </span>
+                        <span class="bg-slate-800 px-3 py-1 rounded-lg border border-amber-500/30 flex items-center">
+                            <i class="fab fa-ethereum text-xs mr-1"></i>
+                            <span>325 توکن جاودان</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <form id="withdrawForm" class="relative">
+                <div class="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/10 rounded-lg opacity-30"></div>
+                <div class="relative space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1 text-slate-300" for="paymentType">نوع پرداخت</label>
+                        <div class="relative">
+                            <select id="paymentType" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 pl-4 pr-10 focus:ring-2 focus:ring-amber-400 appearance-none transition-all focus:border-amber-400 text-white">
+                                <option value="toman">تومان</option>
+                                <option value="token">توکن جاودان</option>
+                            </select>
+                            <div class="absolute left-3 top-3 text-slate-400">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="tomanFields">
+                        <div>
+                            <label class="block text-sm font-medium mb-1 text-slate-300" for="cardNumber">شماره کارت</label>
+                            <div class="relative">
+                                <input type="text" id="cardNumber" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 pl-10 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-all text-white" placeholder="6037 XXXX XXXX XXXX">
+                                <div class="absolute right-3 top-3 text-slate-400">
+                                    <i class="far fa-credit-card"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1 text-slate-300" for="cardOwner">نام صاحب کارت</label>
+                            <div class="relative">
+                                <input type="text" id="cardOwner" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 pl-10 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-all text-white" placeholder="نام و نام خانوادگی">
+                                <div class="absolute right-3 top-3 text-slate-400">
+                                    <i class="far fa-user"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="tokenFields" class="hidden">
+                        <div>
+                            <label class="block text-sm font-medium mb-1 text-slate-300" for="walletAddress">آدرس والت</label>
+                            <div class="relative">
+                                <input type="text" id="walletAddress" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 pl-10 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-all text-white" placeholder="0x71C7656EC7ab88b098defB751B7401B5f6d8976F">
+                                <div class="absolute right-3 top-3 text-slate-400">
+                                    <i class="fas fa-wallet"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1 text-slate-300" for="walletOwner">نام صاحب والت</label>
+                            <div class="relative">
+                                <input type="text" id="walletOwner" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 pl-10 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-all text-white" placeholder="نام و نام خانوادگی">
+                                <div class="absolute right-3 top-3 text-slate-400">
+                                    <i class="far fa-user"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-1 text-slate-300" for="amount">مقدار</label>
+                        <div class="relative">
+                            <input type="number" id="amount" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 pl-10 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-all text-white" placeholder="مقدار مورد نظر را وارد کنید">
+                            <div class="absolute right-3 top-3 text-slate-400">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center">
+                        <button type="button" id="checkTokenPrice" class="text-sm text-amber-400 hover:text-amber-300 hover:underline flex items-center transition-all">
+                            <i class="fas fa-chart-line mr-1"></i> استعلام قیمت توکن
+                        </button>
+                    </div>
+                    
+                    <button type="button" id="submitWithdraw" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 py-3 rounded-lg font-bold text-white transition-all shadow-lg mt-2">
+                        <i class="fas fa-check-circle mr-2"></i> نهایی سازی درخواست
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Processing Modal -->
+    <div id="processingModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 modal modal-hidden">
+        <div class="bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl max-w-md w-full p-6 text-center border-2 border-amber-500/30 shadow-2xl relative">
+            <!-- Animated rings -->
+            <div class="absolute inset-0 flex items-center justify-center">
+                <div class="absolute w-32 h-32 border-4 border-t-transparent border-r-amber-400/30 border-b-transparent border-l-amber-400/30 rounded-full animate-spin"></div>
+                <div class="absolute w-40 h-40 border-4 border-t-transparent border-r-amber-400/50 border-b-transparent border-l-amber-400/50 rounded-full animate-spin" style="animation-duration: 5s;"></div>
+                <div class="absolute w-48 h-48 border-4 border-t-transparent border-r-amber-400/70 border-b-transparent border-l-amber-400/70 rounded-full animate-spin" style="animation-duration: 7s;"></div>
+            </div>
+            
+            <div class="relative z-10">
+                <div class="flex justify-center mb-6">
+                    <div class="relative w-24 h-24 flex items-center justify-center">
+                        <div class="absolute inset-0 border-4 border-t-amber-400 border-r-primary border-b-amber-400 border-l-primary rounded-full animate-spin"></div>
+                        <div class="absolute inset-0 bg-amber-400/10 rounded-full animate-pulse"></div>
+                        <i class="fas fa-cog text-4xl text-amber-400 animate-spin" style="animation-duration: 3s;"></i>
+                    </div>
+                </div>
+                <h2 class="text-xl font-bold mb-2 gradient-text">درحال پردازش</h2>
+                <p class="text-slate-300 mb-4">درخواست شما در حال پردازش است، لطفا صبر کنید...</p>
+                <div class="w-full bg-slate-800 rounded-full h-3 mt-4 mb-2 overflow-hidden">
+                    <div id="processingBar" class="bg-gradient-to-r from-amber-400 to-primary h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+                <p id="processingText" class="text-sm text-slate-400">شروع پردازش...</p>
+            </div>
+            
+            <!-- Floating coins -->
+            <div class="absolute top-8 left-8 text-amber-400/20 text-2xl">
+                <i class="fas fa-coins"></i>
+            </div>
+            <div class="absolute bottom-8 right-8 text-amber-400/20 text-2xl">
+                <i class="fas fa-coins"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 modal modal-hidden">
+        <div class="bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl max-w-md w-full p-6 text-center border-2 border-green-500/50 shadow-2xl relative">
+            <div class="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-green-500/5"></div>
+            <div class="relative">
+                <div class="absolute -top-16 left-1/2 transform -translate-x-1/2">
+                    <div class="w-32 h-32 bg-green-500/20 rounded-full flex items-center justify-center">
+                        <div class="w-24 h-24 bg-green-500/30 rounded-full flex items-center justify-center">
+                            <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center shadow-lg">
+                                <i class="fas fa-check text-3xl text-white"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h2 class="text-xl font-bold mb-2 text-green-400 mt-10">واریز موفق</h2>
+                <p class="text-slate-300 mb-4">درخواست واریز شما با موفقیت ثبت شد.</p>
+                <div class="bg-slate-800/50 rounded-lg p-3 mb-4 border border-green-500/30">
+                    <p class="text-sm text-green-400">
+                        <i class="fas fa-clock mr-1"></i> واریز تا 24 ساعت آینده انجام خواهد شد.
+                    </p>
+                </div>
+                <button id="closeSuccessModal" class="mt-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-400 hover:to-green-500 px-8 py-2 rounded-lg font-medium text-white transition-all shadow-md">
+                    <i class="fas fa-thumbs-up mr-1"></i> متوجه شدم
+                </button>
+            </div>
+            
+            <!-- Confetti effect -->
+            <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+                <div class="confetti" style="position: absolute; width: 10px; height: 10px; background-color: #f00; opacity: 0;"></div>
+                <div class="confetti" style="position: absolute; width: 10px; height: 10px; background-color: #0f0; opacity: 0;"></div>
+                <div class="confetti" style="position: absolute; width: 10px; height: 10px; background-color: #00f; opacity: 0;"></div>
+                <div class="confetti" style="position: absolute; width: 10px; height: 10px; background-color: #ff0; opacity: 0;"></div>
+                <div class="confetti" style="position: absolute; width: 10px; height: 10px; background-color: #f0f; opacity: 0;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Token Price Modal -->
+    <div id="tokenPriceModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 modal modal-hidden">
+        <div class="bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl max-w-md w-full p-6 relative border-2 border-purple-500/50 shadow-2xl">
+            <!-- Decorative elements -->
+            <div class="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-purple-500/5"></div>
+            <div class="absolute top-4 left-4 text-purple-400/10 text-3xl">
+                <i class="fas fa-coins"></i>
+            </div>
+            <div class="absolute bottom-4 right-4 text-purple-400/10 text-3xl">
+                <i class="fas fa-coins"></i>
+            </div>
+            
+            <button id="closeTokenPriceModal" class="absolute left-4 top-4 text-slate-400 hover:text-white text-xl transition-all">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="text-xl font-bold mb-4 text-center text-purple-400">
+                <i class="fas fa-chart-bar mr-2"></i>(JCN)قیمت توکن جاودان
+            </h2>
+            <div class="bg-slate-800/50 rounded-xl p-4 mb-6 border border-purple-500/30">
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-slate-400">قیمت فعلی:</span>
+                    <span class="font-bold text-green-500">$4155</span>
+                </div>
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-slate-400">تغییر 24h:</span>
+                    <span class="font-bold text-green-500">+3.42% <i class="fas fa-arrow-up ml-1"></i></span>
+                </div>
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-slate-400">بالاترین امروز:</span>
+                    <span class="font-bold">0.0000 JCN</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-slate-400">حجم معاملات:</span>
+                    <span class="font-bold">0.0M تومان</span>
+                </div>
+            </div>
+            <div class="text-center">
+                <a href="https://pump.fun/coin/9gSj1ojdnS7KxnkgPY3FpKAu2wK9stpn5CZdmzSZpump" target="_blank" class="inline-flex items-center text-amber-400 hover:text-amber-300 hover:underline transition-all">
+                    <i class="fas fa-external-link-alt mr-2"></i>مشاهده قیمت در سایت(از VPN استفاده کنید)
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+
+
+
+
+
+
+
+
+
+let lastClickTime = 0;
+
+function antiAutoClicker() {
+    let now = Date.now();
+    let diff = now - lastClickTime;
+
+    if (diff < 1) { // اگر فاصله بین کلیک‌ها کمتر از 300 میلی‌ثانیه بود
+        alert("⛔️ لطفا آروم تر کلیک کنید");
+        location.reload(); // صفحه رو ریفرش میکنه یا میتونی بنشون کنی
+        return;
+    }
+
+    lastClickTime = now;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // Game State (loaded from localStorage if available)
+        const state = JSON.parse(localStorage.getItem('hamsterKombatState')) || {
+            javanCoin: 0,
+            toman: 0,
+            tokens: 0,
+            totalClicks: 0,
+            clicksRemaining: 2500,
+            maxClicks: 2500,
+            recoveryTime: 300, // 5 minutes in seconds by default
+            lastClickTime: 0,
+            clicksInSecond: 0,
+            cps: 0,
+            lastTick: Date.now(),
+            upgrades: {
+                clickLimit: false,
+                recoverySpeed: false,
+                conversionRate: false
+            }
+        };
+
+        // Save game state to localStorage
+        function saveGame() {
+            localStorage.setItem('hamsterKombatState', JSON.stringify(state));
+        }
+
+        // DOM Elements
+        const clickButton = document.getElementById('clickButton');
+        const convertToToman = document.getElementById('convertToToman');
+        const convertToToken = document.getElementById('convertToToken');
+        const withdrawBtn = document.getElementById('withdrawBtn');
+        const closeModal = document.getElementById('closeModal');
+        const closeSuccessModal = document.getElementById('closeSuccessModal');
+        const closeTokenPriceModal = document.getElementById('closeTokenPriceModal');
+        const withdrawModal = document.getElementById('withdrawModal');
+        const processingModal = document.getElementById('processingModal');
+        const successModal = document.getElementById('successModal');
+        const tokenPriceModal = document.getElementById('tokenPriceModal');
+        const paymentType = document.getElementById('paymentType');
+        const tomanFields = document.getElementById('tomanFields');
+        const tokenFields = document.getElementById('tokenFields');
+        const checkTokenPrice = document.getElementById('checkTokenPrice');
+        const submitWithdraw = document.getElementById('submitWithdraw');
+        const withdrawForm = document.getElementById('withdrawForm');
+        const clickProgress = document.getElementById('clickProgress');
+        const clicksRemaining = document.getElementById('clicksRemaining');
+        const timeRemaining = document.getElementById('timeRemaining');
+        const processingBar = document.getElementById('processingBar');
+        const processingText = document.getElementById('processingText');
+        const javanCoinBalance = document.getElementById('javanCoinBalance');
+        const tomanBalance = document.getElementById('tomanBalance');
+        const tokenBalance = document.getElementById('tokenBalance');
+        const totalClicks = document.getElementById('totalClicks');
+        const cps = document.getElementById('cps');
+        const score = document.getElementById('score');
+        const upgradeClickLimit = document.getElementById('upgradeClickLimit');
+        const upgradeRecovery = document.getElementById('upgradeRecovery');
+        const upgradeConversion = document.getElementById('upgradeConversion');
+        const coinEffect = document.getElementById('coinEffect');
+
+        // Update UI
+        function updateUI() {
+            javanCoinBalance.textContent = state.javanCoin.toLocaleString('en-US');
+            tomanBalance.textContent = state.toman.toLocaleString('en-US');
+            tokenBalance.textContent = state.tokens.toLocaleString('en-US');
+            clicksRemaining.textContent = state.clicksRemaining.toLocaleString('en-US');
+            totalClicks.textContent = state.totalClicks.toLocaleString('en-US');
+            cps.textContent = state.cps.toFixed(1);
+            
+            // Calculate score based on all currencies (for ranking)
+            const scoreValue = state.toman + (state.tokens * 1500 * 1000) + state.javanCoin;
+            score.textContent = scoreValue.toLocaleString('en-US');
+            
+            // Update progress bar
+            const percentage = (state.clicksRemaining / state.maxClicks) * 100;
+            clickProgress.style.width = `${percentage}%`;
+            
+            // Enable/disable conversion buttons
+            convertToToman.disabled = state.javanCoin < 1500;
+            convertToToken.disabled = state.javanCoin < 1000;
+            
+            // Enable/disable upgrade buttons
+            upgradeClickLimit.disabled = state.javanCoin < 25000 || state.upgrades.clickLimit;
+            upgradeRecovery.disabled = state.javanCoin < 30000 || state.upgrades.recoverySpeed;
+            upgradeConversion.disabled = state.javanCoin < 35000 || state.upgrades.conversionRate;
+            
+            // Update upgrade buttons if purchased
+            if (state.upgrades.clickLimit) {
+                upgradeClickLimit.innerHTML = '<div class="flex justify-center items-center"><i class="fas fa-check-circle mr-2"></i><span>ارتقا داده شده</span></div>';
+            }
+            if (state.upgrades.recoverySpeed) {
+                upgradeRecovery.innerHTML = '<div class="flex justify-center items-center"><i class="fas fa-check-circle mr-2"></i><span>ارتقا داده شده</span></div>';
+            }
+            if (state.upgrades.conversionRate) {
+                upgradeConversion.innerHTML = '<div class="flex justify-center items-center"><i class="fas fa-check-circle mr-2"></i><span>ارتقا داده شده</span></div>';
+            }
+            
+            // Save game state
+            saveGame();
+        }
+
+        // Update time remaining display
+        function updateTimeRemaining() {
+            const clicksUsed = state.maxClicks - state.clicksRemaining;
+            const recoveryRate = state.clicksRemaining / state.maxClicks;
+            const timeElapsed = (1 - recoveryRate) * state.recoveryTime;
+            const remaining = Math.max(0, Math.floor(state.recoveryTime - timeElapsed));
+            
+            const mins = Math.floor(remaining / 60);
+            const secs = remaining % 60;
+            timeRemaining.textContent = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+            
+            if (state.clicksRemaining < state.maxClicks && !clickButton.classList.contains('click-disabled')) {
+                clickButton.classList.add('click-disabled');
+            } else if (state.clicksRemaining >= state.maxClicks && clickButton.classList.contains('click-disabled')) {
+                clickButton.classList.remove('click-disabled');
+            }
+        }
+
+        // Calculate CPS (clicks per second)
+        function calculateCPS() {
+            const now = Date.now();
+            const elapsed = (now - state.lastTick) / 1000;
+            
+            if (elapsed >= 1) {
+                state.cps = state.clicksInSecond;
+                state.clicksInSecond = 0;
+                state.lastTick = now;
+            }
+            
+            updateUI();
+        }
+
+        // Show modal with animation
+        function showModal(modal) {
+            modal.classList.remove('modal-hidden');
+            modal.classList.add('modal-visible');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Hide modal with animation
+        function hideModal(modal) {
+            modal.classList.remove('modal-visible');
+            modal.classList.add('modal-hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Show coin effect animation
+        function showCoinEffect() {
+            coinEffect.classList.remove('hidden');
+            setTimeout(() => {
+                coinEffect.classList.add('hidden');
+            }, 800);
+        }
+
+        // Create confetti effect
+        function createConfetti() {
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+            const confettiElements = document.querySelectorAll('.confetti');
+            
+            confettiElements.forEach((el, i) => {
+                const color = colors[i % colors.length];
+                el.style.backgroundColor = color;
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.top = -10 + 'px';
+                el.style.opacity = '1';
+                el.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
+                el.style.width = Math.random() * 10 + 5 + 'px';
+                el.style.height = Math.random() * 10 + 5 + 'px';
+                
+                const animationDuration = Math.random() * 3 + 2;
+                el.style.transition = 'all ' + animationDuration + 's ease-out';
+                
+                setTimeout(() => {
+                    el.style.top = '100vh';
+                    el.style.opacity = '0';
+                }, 100);
+                
+                setTimeout(() => {
+                    el.style.transition = 'none';
+                    el.style.top = '-10px';
+                    el.style.opacity = '0';
+                }, animationDuration * 1000);
+            });
+        }
+
+        // Event Listeners
+        clickButton.addEventListener('click', () => {
+            if (state.clicksRemaining > 0) {
+                state.javanCoin++;
+                state.totalClicks++;
+                state.clicksRemaining--;
+                state.clicksInSecond++;
+                state.lastClickTime = state.lastClickTime || Date.now();
+                
+                // Show animation
+                showCoinEffect();
+                
+                // Update UI immediately
+                updateUI();
+            }
+        });
+
+        convertToToman.addEventListener('click', () => {
+            if (state.javanCoin >= 1250) {
+                const coinsToConvert = Math.floor(state.javanCoin / 2250) * 2250;
+                const exchangeRate = state.upgrades.conversionRate ? 1200 : 1000; // 20% bonus if upgraded
+                const tomanGained = (coinsToConvert / 2000) * exchangeRate;
+                
+                state.javanCoin -= coinsToConvert;
+                state.toman += tomanGained;
+                
+                // Show feedback
+                const feedback = document.createElement('div');
+                feedback.className = 'fixed bottom-20 right-4 bg-green-600 text-white px-4 py-2 rounded-lg animate-bounce z-50';
+                feedback.innerHTML = `<i class="fas fa-coins mr-1"></i> +${tomanGained.toLocaleString('en-US')} تومان`;
+                document.body.appendChild(feedback);
+                
+                setTimeout(() => {
+                    feedback.remove();
+                }, 2000);
+                
+                updateUI();
+            }
+        });
+
+        convertToToken.addEventListener('click', () => {
+            if (state.javanCoin >= 1000) {
+                const coinsToConvert = Math.floor(state.javanCoin / 2250) * 2250;
+                const tokensGained = coinsToConvert / 2250;
+                
+                state.javanCoin -= coinsToConvert;
+                state.tokens += tokensGained;
+                
+                // Show feedback
+                const feedback = document.createElement('div');
+                feedback.className = 'fixed bottom-20 right-4 bg-purple-600 text-white px-4 py-2 rounded-lg animate-bounce z-50';
+                feedback.innerHTML = `<i class="fas fa-coins mr-1"></i> +${tokensGained.toLocaleString('en-US')} توکن`;
+                document.body.appendChild(feedback);
+                
+                setTimeout(() => {
+                    feedback.remove();
+                }, 2000);
+                
+                updateUI();
+            }
+        });
+
+        withdrawBtn.addEventListener('click', () => {
+            showModal(withdrawModal);
+            
+            // Set payment type based on balances
+            if (state.toman >= 300000) {
+                paymentType.value = 'toman';
+                tomanFields.classList.remove('hidden');
+                tokenFields.classList.add('hidden');
+            } else if (state.tokens >= 325) {
+                paymentType.value = 'token';
+                tomanFields.classList.add('hidden');
+                tokenFields.classList.remove('hidden');
+            }
+        });
+
+        closeModal.addEventListener('click', () => {
+            hideModal(withdrawModal);
+        });
+
+        closeSuccessModal.addEventListener('click', () => {
+            hideModal(successModal);
+        });
+
+        closeTokenPriceModal.addEventListener('click', () => {
+            hideModal(tokenPriceModal);
+        });
+
+        paymentType.addEventListener('change', (e) => {
+            if (e.target.value === 'toman') {
+                tomanFields.classList.remove('hidden');
+                tokenFields.classList.add('hidden');
+            } else {
+                tomanFields.classList.add('hidden');
+                tokenFields.classList.remove('hidden');
+            }
+        });
+
+        checkTokenPrice.addEventListener('click', () => {
+            hideModal(withdrawModal);
+            showModal(tokenPriceModal);
+        });
+
+        submitWithdraw.addEventListener('click', () => {
+            // Validate minimum balance
+            const paymentTypeValue = paymentType.value;
+            let errorMessage = '';
+            
+            if (paymentTypeValue === 'toman' && state.toman < 350000) {
+                errorMessage = 'حداقل موجودی برای برداشت تومان 350,000 تومان می‌باشد.';
+            } else if (paymentTypeValue === 'token' && state.tokens < 325) {
+                errorMessage = 'حداقل موجودی برای برداشت توکن 325 توکن می‌باشد.';
+            }
+            
+            if (errorMessage) {
+                // Show error feedback
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-2 rounded-lg z-50 animate-bounce';
+                errorDiv.textContent = errorMessage;
+                document.body.appendChild(errorDiv);
+                
+                setTimeout(() => {
+                    errorDiv.remove();
+                }, 3000);
+                return;
+            }
+            
+            // Check if amount field is filled
+            const amountInput = document.getElementById('amount');
+            if (!amountInput.value) {
+                // Show error feedback
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-2 rounded-lg z-50 animate-bounce';
+                errorDiv.textContent = 'لطفا مقدار مورد نظر را وارد کنید';
+                document.body.appendChild(errorDiv);
+                
+                setTimeout(() => {
+                    errorDiv.remove();
+                }, 3000);
+                return;
+            }
+            
+            // Start processing
+            hideModal(withdrawModal);
+            showModal(processingModal);
+            
+            // Simulate processing
+            let progress = 0;
+            const messages = [
+                "در حال تأیید اطلاعات...",
+                "بررسی موجودی حساب...",
+                "ارسال درخواست به سرور...",
+                "پردازش نهایی...",
+                "تکمیل عملیات..."
+            ];
+            
+            const interval = setInterval(() => {
+                progress += 4;
+                processingBar.style.width = `${progress}%`;
+                
+                // Update status message
+                const messageIndex = Math.floor(progress / 20);
+                if (messageIndex < messages.length) {
+                    processingText.textContent = messages[messageIndex];
+                }
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        hideModal(processingModal);
+                        
+                        // Create confetti effect
+                        createConfetti();
+                        
+                        showModal(successModal);
+                        
+                        // Reset form
+                        withdrawForm.reset();
+                    }, 500);
+                }
+            }, 400); // ~20 seconds total (400ms * 25 steps)
+        });
+
+        // Upgrade events
+        upgradeClickLimit.addEventListener('click', () => {
+            if (state.javanCoin >= 25000 && !state.upgrades.clickLimit) {
+                state.javanCoin -= 25000;
+                state.upgrades.clickLimit = true;
+                state.maxClicks = 5000;
+                state.clicksRemaining = state.maxClicks;
+                
+                // Show feedback
+                const feedback = document.createElement('div');
+                feedback.className = 'fixed bottom-20 right-4 bg-blue-600 text-white px-4 py-2 rounded-lg animate-bounce z-50';
+                feedback.innerHTML = '<i class="fas fa-mouse-pointer mr-1"></i> محدودیت کلیک ارتقا یافت! (5000 کلیک)';
+                document.body.appendChild(feedback);
+                
+                setTimeout(() => {
+                    feedback.remove();
+                }, 3000);
+                
+                updateUI();
+                saveGame();
+            }
+        });
+
+        upgradeRecovery.addEventListener('click', () => {
+            if (state.javanCoin >= 30000 && !state.upgrades.recoverySpeed) {
+                state.javanCoin -= 30000;
+                state.upgrades.recoverySpeed = true;
+                state.recoveryTime = 180; // 3 minutes
+                
+                // Show feedback
+                const feedback = document.createElement('div');
+                feedback.className = 'fixed bottom-20 right-4 bg-blue-600 text-white px-4 py-2 rounded-lg animate-bounce z-50';
+                feedback.innerHTML = '<i class="fas fa-bolt mr-1"></i> سرعت بازیابی ارتقا یافت! (3 دقیقه)';
+                document.body.appendChild(feedback);
+                
+                setTimeout(() => {
+                    feedback.remove();
+                }, 3000);
+                
+                updateUI();
+                saveGame();
+            }
+        });
+
+        upgradeConversion.addEventListener('click', () => {
+            if (state.javanCoin >= 35000 && !state.upgrades.conversionRate) {
+                state.javanCoin -= 35000;
+                state.upgrades.conversionRate = true;
+                
+                // Show feedback
+                const feedback = document.createElement('div');
+                feedback.className = 'fixed bottom-20 right-4 bg-blue-600 text-white px-4 py-2 rounded-lg animate-bounce z-50';
+                feedback.innerHTML = '<i class="fas fa-percentage mr-1"></i> بازدهی تبدیل ارتقا یافت! (1200 تومان برای 1250 کوین)';
+                document.body.appendChild(feedback);
+                
+                setTimeout(() => {
+                    feedback.remove();
+                }, 3000);
+                
+                updateUI();
+                saveGame();
+            }
+        });
+
+        // Game loop - refill clicks over time
+        setInterval(() => {
+            if (state.clicksRemaining < state.maxClicks) {
+                const recoveryRate = state.maxClicks / state.recoveryTime;
+                state.clicksRemaining = Math.min(state.clicksRemaining + recoveryRate, state.maxClicks);
+                updateTimeRemaining();
+                updateUI();
+            }
+        }, 1000);
+
+        // Calculate CPS regularly
+        setInterval(calculateCPS, 100);
+
+        // Initialize UI
+        updateUI();
+        updateTimeRemaining();
+        
+        // Set initial payment type fields
+        paymentType.dispatchEvent(new Event('change'));
+        
+        // Auto-save every 30 seconds
+        setInterval(saveGame, 30000);
+        
+        // Show welcome message
+        setTimeout(() => {
+            if (state.totalClicks === 0) {
+                const welcome = document.createElement('div');
+                welcome.className = 'fixed bottom-4 right-4 bg-gradient-to-r from-primary to-secondary text-white px-4 py-2 rounded-lg z-50 animate-bounce';
+                welcome.innerHTML = '<i class="fas fa-info-circle mr-1"></i> روی دکمه طلایی کلیک کنید تا جاودان کوین کسب کنید!';
+                document.body.appendChild(welcome);
+                
+                setTimeout(() => {
+                    welcome.remove();
+                }, 5000);
+            }
+        }, 1000);
+    </script>
+
+</body>
+</html>
